@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using HandoverApp.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,11 +41,13 @@ app.Run();
 
 static IResult HandleFeature()
 {
-    return Results.Ok(new
-    {
-        status = "completed",
-        message = "The unfinished feature is now implemented."
-    });
+    return Results.Ok(new FeatureResponse(
+        "completed",
+        "The unfinished feature is now implemented."));
 }
+
+file sealed record FeatureResponse(
+    [property: JsonPropertyName("status")] string Status,
+    [property: JsonPropertyName("message")] string Message);
 
 public partial class Program;
